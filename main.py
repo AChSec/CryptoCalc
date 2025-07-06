@@ -14,7 +14,7 @@ ctk.set_default_color_theme("blue")
 
 app = ctk.CTk()
 app.geometry("1000x550")
-app.title("Kryptographie Rechner | Ch. Lönneker")
+app.title("Kryptographie Rechner")
 
 main_frame = ctk.CTkFrame(app, fg_color="#deebfc")  # Main frame with 2 rows and 3 columns
 main_frame.pack(expand=True, fill="both")                                              
