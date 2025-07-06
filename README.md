@@ -22,9 +22,11 @@ An interactive tool for demonstrating and computing fundamental cryptographic te
 Clone the repository
 
 Git clone https://github.com/AChSec/CryptoCalc
+
 Cd CryptoCalc
 
 Run the tool
+
 Python main.py
 
 ## About AChSec ## 
