@@ -11,8 +11,11 @@ An interactive tool for demonstrating and computing fundamental cryptographic te
 -	RSA and ElGamal encryption & digital signatures
 -	Zero-Knowledge Proofs
 -	ECC and more
+  
 **Utility modules such as hash functions and MACs**
+
 **Visual sketches and formulas to help explain each protocol**
+
 **Additional explanations**
 
 ## Getting Started ##
