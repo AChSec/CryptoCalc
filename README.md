@@ -22,14 +22,15 @@ An interactive tool for demonstrating and computing fundamental cryptographic te
 Clone the repository
 
 ```bash
-Git clone https://github.com/AChSec/CryptoCalc
+git clone https://github.com/AChSec/CryptoCalc
 
-Cd CryptoCalc
-´
+cd CryptoCalc
+```
+
 Run the tool
-
-Python main.py
-
+```bash
+python main.py
+```
 ## About AChSec ## 
 The neurotransmitter acetylcholine (ACh) plays a key role in attention, learning and action within the human brain. Just as ACh facilitates rapid neural responses, AChSec focuses on active, adaptive, and human-centered cybersecurity.
 
