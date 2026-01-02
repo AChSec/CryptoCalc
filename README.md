@@ -124,12 +124,25 @@ git clone https://github.com/AChSec/CryptoCalc
 
 cd CryptoCalc
 ```
+Create and activate a virtual environment (Windows):
 
-Run the calculator via terminal:
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Run the application:
 
 ```bash
 python main.py
 ```
+The graphical user interface will start automatically.
 
 ---
 
