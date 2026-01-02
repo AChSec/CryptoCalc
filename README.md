@@ -157,8 +157,8 @@ The project is designed to be easily extended, for example by adding:
 
 ## 👤 Author
 
-Chris L.
-Cybersecurity & IT-Forensics | MSc Psychology
+Chris L.  
+Cybersecurity & IT-Forensics | MSc Psychology  
 GitHub: AChSec
 
 ---
