@@ -11,21 +11,21 @@ def diffie_hellman(ctx):
             a = int(entries["a"].get())
             b = int(entries["b"].get())
             alpha, beta, key = dh_exchange(p, g, a, b)
-            ctx.output_label.configure(text=f"Alice sendet α = {alpha}\n\nBob rechnet α ** b mod p = {key} = K\n\nBob sendet β = {beta}\n\nAlice rechnet β ** a mod p = {key} = K", 
+            ctx.output_label.configure(text=f"Alice sends α = {alpha}\n\nBob calculates α ** b mod p = {key} = K\n\nBob sends β = {beta}\n\nAlice calculates β ** a mod p = {key} = K", 
                           font=("Roboto", 14), 
                           justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
     
     
     input_frame = ctk.CTkFrame(ctx.content, fg_color="#c9dcf5")
     input_frame.pack()
     
-    placeholders = {"p": "Modul p", "g": "Basis g", "a": "a", "b": "b"}
+    placeholders = {"p": "Modulus p", "g": "Basis g", "a": "a", "b": "b"}
     grid_positions = {  "p": (0,0), "g": (0,1), "a": (1,0), "b": (1,1)}
     entries = create_input_grid(input_frame, placeholders, grid_positions)
     
-    ctk.CTkButton(input_frame, text="Berechnen", command=run, width=120).grid(row= 2, column=0, columnspan=2, pady=10)
+    ctk.CTkButton(input_frame, text="Calculate", command=run, width=120).grid(row= 2, column=0, columnspan=2, pady=10)
     
     image_frame = ctk.CTkFrame(ctx.content, fg_color="#d4b05b")
     image_frame.pack(fill="both", expand=True, pady=(10, 0))

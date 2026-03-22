@@ -12,12 +12,12 @@ def point_addition(ctx):
             yq = int(entries["yq"].get())
             n =  int(entries["n"].get())
             if xp == xq and yp == yp: 
-                ctx.output_label.configure(text=f"Berechnung mit dieser Funktion nicht möglich (Xp und Xq dürfen nicht identisch sein)", anchor="nw", justify="left")
+                ctx.output_label.configure(text=f"Calculation not possible (Xp and Xq must be different)", anchor="nw", justify="left")
             else: 
                 xr, yr = f.point_addition(xp, yp, xq, yq, n)
-                ctx.output_label.configure(text=f"Ergebnis: Der Punkt R hat die Koordinaten R({xr}|{yr})", font=("Roboto", 14), anchor="nw", justify="left")
+                ctx.output_label.configure(text=f"Result: The point R has the coordinates R({xr}|{yr})", font=("Roboto", 14), anchor="nw", justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
             
 
     insert_frame = ctk.CTkFrame(ctx.content, fg_color="#c9dcf5")
@@ -33,14 +33,14 @@ def point_addition(ctx):
     ctk.CTkLabel(insert_frame, text="|").grid(row=0, column=2, sticky="w", padx=5)
     ctk.CTkLabel(insert_frame, text="Q").grid(row=1, column=0, sticky="w", padx=5)
     ctk.CTkLabel(insert_frame, text="|").grid(row=1, column=2, sticky="w", padx=5)
-    ctk.CTkLabel(insert_frame, text="Modul").grid(row=4, column=0, sticky="w", padx=5)
+    ctk.CTkLabel(insert_frame, text="Modulus").grid(row=4, column=0, sticky="w", padx=5)
 
-    ctk.CTkButton(ctx.content, text="Punktaddition", command=run).pack(pady=10)
+    ctk.CTkButton(ctx.content, text="Point Addition", command=run).pack(pady=10)
 
     create_image(ctx.content, ctx.images, "ecc")
 
     
     ### Infobox ###
     
-    insert_info(ctx.info_box, "Anwendung:", ecc_info)
+    insert_info(ctx.info_box, "Use case:", ecc_info)
 

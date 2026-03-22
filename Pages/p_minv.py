@@ -9,18 +9,18 @@ def m_inverse(ctx):
         try:
             n, a, b = m_inv(int(entry_a.get()), int(entry_n.get()))
             if b:
-                ctx.output_label.configure(text=f"a\u207B\u00B9 = {b}\n\n{a} * {b} modulo {n} ergibt {a * b % n}", font=("Roboto", 14))
+                ctx.output_label.configure(text=f"a\u207B\u00B9 = {b}\n\nProof: {a} * {b} modulo {n} results in {a * b % n}", font=("Roboto", 14))
             else:
-                ctx.output_label.configure(text=f"Die Zahlen {a} und {n} sind nicht teilerfremd", font=("Roboto", 14), justify="left")
+                ctx.output_label.configure(text=f"The numbers {a} and {n} are not coprime.", font=("Roboto", 14), justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
 
     entry_a = ctk.CTkEntry(ctx.content, placeholder_text="a:")
     entry_n = ctk.CTkEntry(ctx.content, placeholder_text="n:")
     entry_a.pack(pady=5)
     entry_n.pack(pady=5)
     
-    ctk.CTkButton(ctx.content, text="Berechnen", command=run).pack(pady=10)
+    ctk.CTkButton(ctx.content, text="Calculate", command=run).pack(pady=10)
 
     image = ctx.images.get("gcd")
     if image:

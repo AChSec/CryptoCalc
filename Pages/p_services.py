@@ -9,10 +9,10 @@ def services(ctx): 						# info page regarding security services
 		ctk.CTkLabel(ctx.content, image=image, text="", 
 			   width=200).pack(padx=3, pady=(10,5), expand=True, fill="both")
 	
-	insert_info(ctx.info_box, "Vertraulichkeit", confidentiality)
-	insert_info(ctx.info_box, "Authentizität", authenticity)
-	insert_info(ctx.info_box, "Integrität", integrity)
-	insert_info(ctx.info_box, "Verbindlichkeit", non_repudiation)
+	insert_info(ctx.info_box, "Confidentiality", confidentiality)
+	insert_info(ctx.info_box, "Authenticity", authenticity)
+	insert_info(ctx.info_box, "Integrity", integrity)
+	insert_info(ctx.info_box, "Non-repudiation", non_repudiation)
 
 
 
@@ -22,9 +22,9 @@ def mechanisms(ctx): 						# info page regarding security mechanisms
 		ctk.CTkLabel(ctx.content, image=image, text="", 
 			   width=200).pack(padx=3, pady=(10,5), expand=True, fill="both")
 	
-	insert_info(ctx.info_box, "Verschlüsselung", encryption)
-	insert_info(ctx.info_box, "Digitale Signaturen", signatures)
-	insert_info(ctx.info_box, "Hilfsfunktionen", auxiliaries)
+	insert_info(ctx.info_box, "Encryption", encryption)
+	insert_info(ctx.info_box, "Digital Signatures", signatures)
+	insert_info(ctx.info_box, "Utilities", auxiliaries)
 
 
 

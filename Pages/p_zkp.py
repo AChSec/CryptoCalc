@@ -13,7 +13,7 @@ def zero_knowledge_info(ctx):
         ctk.CTkLabel(border_frame, image=image, text="", 
                width=200, fg_color="#f3f3f3").pack(padx=2, pady=2, fill="both")
         
-    insert_info(ctx.info_box, "Zero-Knowledge Proof in der Kryptographie", zkp_info)
+    insert_info(ctx.info_box, "Zero-Knowledge Proofs in Cryptography", zkp_info)
 
 def fiat_shamir(ctx):
     def commitment():
@@ -24,12 +24,12 @@ def fiat_shamir(ctx):
             ctx.output_label.configure(text=f"{k}² mod {n} = {x}", 
                                        font=("Roboto", 14), justify="left")
             ctx.info_box.configure(state="normal")
-            ctx.info_box.insert("end", f"\n\n*** Commitment ist erfolgt: {x} ***")
+            ctx.info_box.insert("end", f"\n\n*** Commitment successful: {x} ***")
             ctx.info_box.configure(state="disabled")
             entries["x"].delete(0, "end")
             entries["x"].insert(0, int(x))
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
 
     def run():
         try:
@@ -38,7 +38,7 @@ def fiat_shamir(ctx):
             k = int(entries["k"].get())
             r_bit = bit.get()
             v, x, y = f.fiat_shamir(n, s, k, r_bit)
-            ctx.output_label.configure(text=f"Öffentlicher Schlüssel: {n}, {v}\nCommitment: {x}\nResponse: {y}", 
+            ctx.output_label.configure(text=f"Public key: {n}, {v}\nCommitment: {x}\nResponse: {y}", 
                                        font=("Roboto", 14), justify="left")
             entries["v"].delete(0, "end")
             entries["v"].insert(0, int(v))
@@ -46,7 +46,7 @@ def fiat_shamir(ctx):
             entries["y"].insert(0, int(y))
 
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
     
     def verification():
         try:
@@ -58,7 +58,7 @@ def fiat_shamir(ctx):
             check = f.fiat_shamir_verification(n, v, x, y, r_bit)
             ctx.output_label.configure(text=f"{check}", font=("Roboto", 14), justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
 
 
     ### Build page with entry fields, buttons, and image
@@ -89,7 +89,7 @@ def fiat_shamir(ctx):
 
 
     ctk.CTkButton(insert_frame, text="Commit", command=commitment, width=80).grid(row= 4, column=0, pady=10)
-    ctk.CTkButton(insert_frame, text="Berechnen", command=run, width=80).grid(row= 4, column=2, pady=10)
+    ctk.CTkButton(insert_frame, text="Calculate", command=run, width=80).grid(row= 4, column=2, pady=10)
     ctk.CTkButton(insert_frame, text="Check", command=verification, width=80).grid(row= 4, column=3, pady=10)
 
     create_image(ctx.content, ctx.images, "zkp")

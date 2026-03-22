@@ -14,7 +14,7 @@ ctk.set_default_color_theme("blue")
 
 app = ctk.CTk()
 app.geometry("1000x550")
-app.title("Kryptographie Rechner | Ch. Lönneker")
+app.title("CryptoCalc")
 
 main_frame = ctk.CTkFrame(app, fg_color="#deebfc")  # Main frame with 2 rows and 3 columns
 main_frame.pack(expand=True, fill="both")                                              
@@ -40,12 +40,12 @@ output.grid_rowconfigure(1, weight=1)
 
 # 3rd column: output header, scrollable frame & default text
 
-ctk.CTkLabel(output, text="Ergebnis", font=("Roboto", 18)).grid(row=0, column=0, sticky ="new", pady=5)
+ctk.CTkLabel(output, text="Outcome", font=("Roboto", 18)).grid(row=0, column=0, sticky ="new", pady=5)
 
 output_frame = ctk.CTkScrollableFrame(output, fg_color="#deebfc", width=300)
 output_frame.grid(row=1, column=0, rowspan=2, sticky="nsew", padx=10)
 
-output_label = ctk.CTkLabel(output_frame, text="Bitte wähle eine Funktion aus\n", font=("Roboto", 14, "bold"), 
+output_label = ctk.CTkLabel(output_frame, text="Select a function.\n", font=("Roboto", 14, "bold"), 
                             wraplength=230, width=260, height=120, anchor="n", justify="center")
 output_label.pack(pady=10, padx=10, fill="both", expand=True)
 
@@ -74,18 +74,18 @@ for name in names:
 
 small_buttons = [
 #   Button                  Description (header)                    Page (pages)    Submenu             Row Column  Padx (left/right)
-    ("Caesar", 	            "Caesar-Verschlüsselung",               "CAESAR",       None,               2,  0,      (10,5)),
-    ("Spalten",             "Spaltentransposition",                 "COL_TRANS",    None,               2,  1,      (5,10)),
-    ("a\u207B\u00B9 mod n", "Multiplikativ Inverses Element",       "M_INV",        None,               3,  0,      (10,5)),
-    ("DH",       			"Diffie-Hellman Schlüsselaustausch",    "DH",           None,               3,  1,      (5,10)),
-    ("RSA",                 "Rivest–Shamir–Adleman Verfahren (RSA)","RSA_INFO",     "rsa_subframe",     4,  0,      (10,5)),
-    ("ElGamal",             "Das ElGamal Verfahren",                "ELGAMAL_INFO", "elgamal_subframe", 4, 1,       (5,10)),
-    ("ECC", 				"Elliptische Kurven",                   "ECC",          None,               6,  0,      (10,5)),
-    ("Signatur",            "Digitale Signaturen",                  "SIGNATURES",   "signature_subframe",6, 1,      (5,10)),
-    ("Fermat", 				"Faktorisierungsmethode nach Fermat",   "FERMAT",       None,               8,  0,      (10,5)),
+    ("Caesar", 	            "Caesar Cipher",                        "CAESAR",       None,               2,  0,      (10,5)),
+    ("Columns",             "Columnar Transposition",               "COL_TRANS",    None,               2,  1,      (5,10)),
+    ("a\u207B\u00B9 mod n", "Multiplicative Inverse",               "M_INV",        None,               3,  0,      (10,5)),
+    ("DH",       			"Diffie-Hellman Key Exchange",          "DH",           None,               3,  1,      (5,10)),
+    ("RSA",                 "Rivest–Shamir–Adleman Algorithm (RSA)","RSA_INFO",     "rsa_subframe",     4,  0,      (10,5)),
+    ("ElGamal",             "ElGamal Algorithm",                    "ELGAMAL_INFO", "elgamal_subframe", 4, 1,       (5,10)),
+    ("ECC", 				"Elliptic Curves",                      "ECC",          None,               6,  0,      (10,5)),
+    ("Signatures",          "Digital Signatures",                   "SIGNATURES",   "signature_subframe",6, 1,      (5,10)),
+    ("Fermat", 				"Fermat Factorization Method",          "FERMAT",       None,               8,  0,      (10,5)),
     ("BSGS", 				"Shanks' Baby-step Giant-step",         "BSGS",         None,               8,  1,      (5,10)),
     ("ZKP",                 "Zero-Knowledge Proof",                 "ZKP_INFO",     "zkp_subframe",     9,  0,      (10,5)),
-    ("Hash/MAC",            "Kryptographische Hilfsfunktionen",     "AUXILIARIES",  "hash_subframe",    9,  1,      (5,10)),
+    ("Hash/MAC",            "Cryptographic Utilities",              "AUXILIARIES",  "hash_subframe",    9,  1,      (5,10)),
 ]
 for text, desc, page_key, subframe_key, row, col, padx in small_buttons:
     s = subframes.get(subframe_key) if subframe_key else None
@@ -98,10 +98,10 @@ for text, desc, page_key, subframe_key, row, col, padx in small_buttons:
 
 big_buttons = [
 #   Button                  Description (header)                    Page (pages)                        Row         pady   Active color
-    ("Home",                "Willkommen",                           "HOME",                             0,         (10,7), True),
-    ("Sicherheitsdienste",  "Sicherheitsdienste",                   "SERVICES",                         12,             7, False),
-    ("Sicherheitsmechanismen","Sicherheitsmechanismen",             "MECHANISMS",                       13,             7, False),
-    ("Sicherheitsprotokolle","Sicherheitsprotokolle",               "PROTOCOLS",                        14,             7, False),
+    ("Home",                "Welcome",                              "HOME",                             0,         (10,7), True),
+    ("Security Services",   "Security Services",                    "SERVICES",                         12,             7, False),
+    ("Security Mechanisms", "Security Mechanisms",                  "MECHANISMS",                       13,             7, False),
+    ("Security Protocols",  "Security Protocols",                   "PROTOCOLS",                        14,             7, False),
     ("About",               None,                                   None,                               16,             7, False)
 ]
 for text, desc, page, row, pady, always_active in big_buttons:
@@ -120,24 +120,24 @@ for text, desc, page, row, pady, always_active in big_buttons:
 
 submenus_data = {
     "rsa_subframe": [
-        ("RSA Key", 			lambda: [prepare_page("RSA Schlüsselerzeugung", ctx, close=False),		pages["RSA_KEY"](ctx)], 		0),
-        ("RSA Encrypt", 		lambda: [prepare_page("RSA Verschlüsselung", ctx, close=False),			pages["RSA_ENCRYPT"](ctx)], 	1),
-        ("RSA Decrypt", 		lambda: [prepare_page("RSA Entschlüsselung", ctx, close=False),			pages["RSA_DECRYPT"](ctx)],		2)
+        ("RSA Key", 			lambda: [prepare_page("RSA Key Generation", ctx, close=False),	    	pages["RSA_KEY"](ctx)], 		0),
+        ("RSA Encrypt", 		lambda: [prepare_page("RSA Encryption", ctx, close=False),  			pages["RSA_ENCRYPT"](ctx)], 	1),
+        ("RSA Decrypt", 		lambda: [prepare_page("RSA Decryption", ctx, close=False),		    	pages["RSA_DECRYPT"](ctx)],		2)
     ],
     "elgamal_subframe": [
-        ("Schlüsselerzeugung", 	lambda: [prepare_page("ElGamal Schlüsselgenerierung", ctx, close=False),pages["ELGAMAL_KEY"](ctx)], 	0),
-        ("Verschlüsselung", 	lambda: [prepare_page("ElGamal Verschlüsselung", ctx, close=False),		pages["ELGAMAL_ENCRYPT"](ctx)], 1),
-        ("Key Agreement", 		lambda: [prepare_page("ElGamal Schlüsselvereinbarung", ctx, close=False),pages["ELGAMAL_EXCHANGE"](ctx)],2)
+        ("Key Generation", 	    lambda: [prepare_page("ElGamal Key Generation", ctx, close=False),      pages["ELGAMAL_KEY"](ctx)], 	0),
+        ("Encryption", 	        lambda: [prepare_page("ElGamal Encryption", ctx, close=False),		    pages["ELGAMAL_ENCRYPT"](ctx)], 1),
+        ("Key Agreement", 		lambda: [prepare_page("ElGamal Key Agreement", ctx, close=False),       pages["ELGAMAL_EXCHANGE"](ctx)],2)
     ],
     "signature_subframe": [
-        ("Erzeugung", 			lambda: [prepare_page("Signatur-Erzeugung", ctx, close=False),			pages["SIGN"](ctx)], 			0),
-        ("Verifikation",	 	lambda: [prepare_page("Signatur-Verifizierung", ctx, close=False),		pages["VERIFY"](ctx)], 			1),
+        ("Generation", 			lambda: [prepare_page("Signature Generation", ctx, close=False),		pages["SIGN"](ctx)], 			0),
+        ("Verification",	 	lambda: [prepare_page("Signature Verification", ctx, close=False),		pages["VERIFY"](ctx)], 			1),
     ],
     "zkp_subframe": [
-        ("Fiat-Shamir",			lambda: [prepare_page("Fiat-Shamir Protokoll", ctx, close=False),		pages["FIAT-SHAMIR"](ctx)], 	0)		
+        ("Fiat-Shamir",			lambda: [prepare_page("Fiat-Shamir Protocol", ctx, close=False),		pages["FIAT-SHAMIR"](ctx)], 	0)		
     ],
     "hash_subframe": [
-        ("Hash Func",			lambda: [prepare_page("Hash-Funktionen", ctx, close=False),		    	pages["HASH"](ctx)],		    0),
+        ("Hash Func",			lambda: [prepare_page("Hash Functions", ctx, close=False),		    	pages["HASH"](ctx)],		    0),
         ("PW Hash",				lambda: [prepare_page("Password Hashing", ctx, close=False),			pages["PW-HASHING"](ctx)],	    1),
         ("MAC/HMAC",			lambda: [prepare_page("Message Authentication Codes", ctx, close=False),pages["MAC"](ctx)],		        2)		
     ]
@@ -157,7 +157,7 @@ for sep in separators:
 
 ### Start page ###
 
-prepare_page("Willkommen", ctx)
+prepare_page("Welcome", ctx)
 pages["HOME"](ctx)
 
 

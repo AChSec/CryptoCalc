@@ -60,7 +60,7 @@ def show_subframe(subframe, button):				    # opens submenus (avalable for RSA, 
 
 def clear_output(ctx):						            # clears content in the right-sided section (3rd column)
     ctx.output_label.configure(text="")						
-    ctx.output_label.configure(text=f"Warte auf Berechnung\n", font=("Roboto", 14, "bold"), justify="center")
+    ctx.output_label.configure(text=f"Waiting for calculation...\n", font=("Roboto", 14, "bold"), justify="center")
 
 
 def clear_content(ctx):						            # clears content in the middle section (2nd column)

@@ -10,7 +10,7 @@ def elgamal_main(ctx):
     create_image(ctx.content, ctx.images, "elgamal_sec")
     
     insert_info(ctx.info_box, "Info:", elgamal_info)
-    insert_info(ctx.info_box, "Anwendung:", elgamal_application)
+    insert_info(ctx.info_box, "Use case:", elgamal_application)
     
 
 
@@ -21,24 +21,24 @@ def elgamal_key(ctx):
             g = int(entry_g.get())
             d = int(entry_d.get())
             e = f.elgamal_key(p, g, d)
-            ctx.output_label.configure(text=f"e = {e}\n\nVeröffentliche ({p}, {g}, {e})", font=("Roboto", 14), justify="left")
+            ctx.output_label.configure(text=f"e = {e}\n\nPublish ({p}, {g}, {e})", font=("Roboto", 14), justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
 
     entry_p = ctk.CTkEntry(ctx.content, placeholder_text="p:")
     entry_p.pack(pady=5)
     entry_g = ctk.CTkEntry(ctx.content, placeholder_text="g:")
     entry_g.pack(pady=5)
-    entry_d = ctk.CTkEntry(ctx.content, placeholder_text="d vorgeben:")
+    entry_d = ctk.CTkEntry(ctx.content, placeholder_text="specify d:")
     entry_d.pack(pady=5)
 
-    ctk.CTkButton(ctx.content, text="Berechnen", command=run).pack(pady=10)
+    ctk.CTkButton(ctx.content, text="Calculate", command=run).pack(pady=10)
 
     image = ctx.images.get("key")
     if image:
         ctk.CTkLabel(ctx.content, image=image, text="").pack(pady=10, anchor="n")
 
-    insert_info(ctx.info_box, "Schritte:", elgamal_key_info)
+    insert_info(ctx.info_box, "Steps:", elgamal_key_info)
 
 
 
@@ -53,7 +53,7 @@ def elgamal_encrypt(ctx):
             a, b = f.elgamal_encrypt(x, p, g, e, k)
             ctx.output_label.configure(text=f"a = {a}\nb = {b}", font=("Roboto", 14), justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
 
     insert_frame = ctk.CTkFrame(ctx.content, fg_color="#c9dcf5")
     insert_frame.pack()
@@ -65,7 +65,7 @@ def elgamal_encrypt(ctx):
     grid_positions = {"p": (1,0), "g": (1,1), "e": (2,0), "k": (2,1)}
     entries = create_input_grid(insert_frame, placeholders, grid_positions)
 
-    ctk.CTkButton(ctx.content, text="Berechnen", command=run).pack(pady=10)
+    ctk.CTkButton(ctx.content, text="Calculate", command=run).pack(pady=10)
 
     create_image(ctx.content, ctx.images, "elgamal_encr")
 
@@ -82,7 +82,7 @@ def elgamal_exchange(ctx):
             a, key = f.elgamal_exchange_A(p, g, e, k)
             ctx.output_label.configure(text=f"a = {a}\nAlice Key = {key}", font=("Roboto", 14), justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
     
     def run_bob():
         try:
@@ -92,7 +92,7 @@ def elgamal_exchange(ctx):
             key = f.elgamal_exchange_B(a, d, p)
             ctx.output_label.configure(text=f"Bob Key = {key}", font=("Roboto", 14), justify="left")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
 
     
     insert_frame = ctk.CTkFrame(ctx.content, fg_color="#c9dcf5")
@@ -105,8 +105,8 @@ def elgamal_exchange(ctx):
     grid_positions = {"p": (1,0), "g": (1,1), "e": (2,0), "k": (2,1), "a": (1,2), "d":(1,3)}
     entries = create_input_grid(insert_frame, placeholders, grid_positions)
 
-    ctk.CTkButton(insert_frame, text="Berechnen", command=run_alice, width=120).grid(row= 3, column=0, columnspan=2, pady=10)
-    ctk.CTkButton(insert_frame, text="Berechnen", command=run_bob, width=120).grid(row= 3, column=2, columnspan=2, pady=10)
+    ctk.CTkButton(insert_frame, text="Calculate", command=run_alice, width=120).grid(row= 3, column=0, columnspan=2, pady=10)
+    ctk.CTkButton(insert_frame, text="Calculate", command=run_bob, width=120).grid(row= 3, column=2, columnspan=2, pady=10)
 
     create_image(ctx.content, ctx.images, "elgamal_exch")
 

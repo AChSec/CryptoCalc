@@ -9,7 +9,7 @@ def home(ctx):
         ctk.CTkLabel(ctx.content, image=image, text="", 
                      justify="left").pack(padx=5, pady=(0, 15), side="left")
     
-    ctk.CTkLabel(ctx.content, text="Kryptographie Rechner", 
+    ctk.CTkLabel(ctx.content, text="Cryptography Calculator and Learning Tool", 
                  font=("Roboto", 14, "bold")).pack(padx=7, pady=(5, 40), side="left")
     
-    insert_info(ctx.info_box, "Einführung in die Kryptographie und Kryptoanalyse", introduction)
+    insert_info(ctx.info_box, "Introduction to Cryptography and Cryptanalysis", introduction)

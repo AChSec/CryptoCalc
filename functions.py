@@ -6,12 +6,12 @@ import hmac
                             ### Primality test ###
 
 def is_prime(n):                                # is used in functions rsa_key, elgamal_key, col_trans, dh_exchange
-	if n < 2:
-		return False
-	for i in range(2, int(n**0.5) + 1):
-		if n % i == 0:
-			return False
-	return True                                 # returns True if n is prime
+     if n < 2:
+          return False
+     for i in range(2, int(n**0.5) + 1):
+          if n % i == 0:
+               return False
+     return True                                 # returns True if n is prime
 
 
                             ### Convert ASCII ###
@@ -28,7 +28,7 @@ def ascii_to_text(ascii_string):                # converts ASCII string back to 
           chars = [chr(int(s[i:i+3])) for i in range(0, len(s), 3)]
           return ''.join(chars)
      except ValueError:
-          return "Ungültige Eingabe"
+          return "Invalid input"
      
 
                             ### Multiplicative Inverse ###
@@ -53,7 +53,10 @@ def m_inverse(a, n):                            # is used in functions rsa_key, 
 
 def caesar_substitution(text, key):             # applies a Caesar cipher substitution to the input text
     text = text.upper()
-    key = int(key) % 26                         # Latin alphabet: mod 26
+    try:
+         key = int(key) % 26                    # Latin alphabet: mod 26
+    except ValueError:
+          raise ValueError("Key must be a number.")
     s = ""
     for char in text:
         if 'A' <= char <= 'Z':
@@ -71,7 +74,7 @@ def caesar_substitution(text, key):             # applies a Caesar cipher substi
 def columnar_transposition(text):               # performs columnar transposition visualization on the input text
 
     if is_prime(len(text)):                     # error message if text length is prime
-        return f"Die Zeichenlänge {len(text)} ist eine Primzahl - keine Spaltentransformation möglich"
+        return f"Text length {len(text)} is prime – columnar transposition not possible."
     else:
         t = []*len(text)                        # converts entry text into list of characters
         for i in text:   
@@ -85,7 +88,7 @@ def columnar_transposition(text):               # performs columnar transpositio
             return f
 
         def create_matrix(t, f):
-            matrix = f"Textlänge: {len(t)} Zeichen\n"
+            matrix = f"Text length: {len(t)} Characters\n"
             f = f[1:]                           # remove 1 and len(text) from factor list
             f = f[:-1]                          # (both are not relevant for columnar transposition)
            
@@ -93,7 +96,7 @@ def columnar_transposition(text):               # performs columnar transpositio
                 s = ""                          # create empty string for each factor (displayed at the end)
                 col = int(col)
                 row = int(len(t) / col)
-                matrix += f"\nSpalten: {col}, Zeilen: {row}\n"
+                matrix += f"\nColumns: {col}, Rows: {row}\n"
                 matrix_array = np.asarray(t).reshape(col, row).T     # using numpy to reshape the text into the grid
                 matrix += "Matrix:\n"
                 for r in matrix_array:
@@ -113,11 +116,11 @@ def columnar_transposition(text):               # performs columnar transpositio
 
 def dh_exchange(p, g, a, b):
     if not is_prime(p):                         # checks prerequisites (p = prime)
-        raise ValueError("\np muss eine Primzahlen sein")
+        raise ValueError("\np must be a prime number.")
     if not (1 < a <= p - 2 and 1 < b <= p - 2):
-         raise ValueError(f"\nZufallszahlen müssen zwischen 1 und {p-2} liegen")
+         raise ValueError(f"\nRandom numbers must be between 1 and {p-2}.")
     if not (2 < g <= p - 2):
-         raise ValueError(f"\ng muss zwischen 2 und {p-2} liegen")
+         raise ValueError(f"\ng must be between 2 and {p-2}.")
     alpha, beta = pow(g, a, p), pow(g, b, p)    # discrete exponentiation, returns alpha and beta
     key = pow(alpha, b, p)
     return alpha, beta, key               
@@ -127,13 +130,13 @@ def dh_exchange(p, g, a, b):
 
 def rsa_key(p, q, e):
     if not is_prime(p) or not is_prime(q):
-         raise ValueError("\np und q müssen Primzahlen sein")
+         raise ValueError("\np and q must be prime numbers.")
     n = p * q
     phi_n = (p - 1) * (q - 1)
     while math.gcd(e, phi_n) > 1:               # ensure e is coprime to phi_n
          e = e + 1        
     if e >= phi_n:
-         raise ValueError("\ne größer/gleich phi_n")
+         raise ValueError("\nError: e greater than or equal to phi(n).")
     _, _, d = m_inverse(e, phi_n)               # compute multiplicative inverse of e mod phi_n (i.e. private key d)
     return (n, e, d, phi_n) 
 
@@ -152,14 +155,14 @@ def rsa_decrypt(n, d, y):                       # decrypts ciphertext y using RS
 
 def elgamal_key(p, g, d):                       # generates ElGamal public key
     if not is_prime(p):
-         raise ValueError("\np muss eine Primzahl sein")
+         raise ValueError("\np must be a prime number.")
     e = g ** d % p
     return e                                    # returns public key component e = g^d mod p
 
 
 def elgamal_encrypt(x, p, g, e, k):             # encrypts plaintext x using ElGamal encryption
     while math.gcd(k, (p-1))>1:
-         raise ValueError("\nk muss teilerfremd zu p-1 sein")
+         raise ValueError("\nk must be coprime to p-1.")
     a = pow(g, k, p)
     b = (pow(e, k, p) * x) % p
     return (a, b)                               # returns ciphertext tuple
@@ -167,7 +170,7 @@ def elgamal_encrypt(x, p, g, e, k):             # encrypts plaintext x using ElG
 
 def elgamal_exchange_A(p, g, e, k):             # simulates ElGamal key exchange from party A
     while math.gcd(k, (p-1))>1:
-         raise ValueError("\nk muss teilerfremd zu p-1 sein")
+         raise ValueError("\nk must be coprime to p-1.")
     key = e ** k % p
     a = g ** k % p
     return (a, key)                             # returns a (public value to send), key (shared secred component)
@@ -200,7 +203,7 @@ def rsa_sign(x, d, n):                          # generates RSA signature for me
 
 def elgamal_sign(p, g, d, r, m):                # generates ElGamal signature for message m
      while math.gcd(r, (p-1))>1:                # ensure r is coprime to p-1
-         raise ValueError("\nr muss teilerfremd zu p-1 sein")
+         raise ValueError("\nr must be coprime to p-1.")
      _, _, ri = m_inverse(r, (p-1))             # compute multiplicative inverse of r mod (p-1)
      rho = pow(g, r, p)
      h = int(hashlib.sha256(str(m).encode()).hexdigest(), 16)
@@ -211,18 +214,18 @@ def elgamal_sign(p, g, d, r, m):                # generates ElGamal signature fo
 def rsa_check(e, n, s, x):                      # verifies RSA signature
      temp = pow(s, e, n)
      if temp == x:                              # x : original message
-          return "\u2705 Die Signatur ist gültig!"
+          return "\u2705 The signature is valid!"
      else: 
-          return "\U0001F6AB Die Signatur ist ungültig!"
+          return "\U0001F6AB The signature is invalid!"
 
 
 def elgamal_check(p, g, e, rho, s, m):          # verifies ElGamal signature
      temp1 = pow(g, m, p)                       # m : original message
      temp2 = (e ** rho) * (rho ** s) % p
      if temp1 == temp2:
-        return "\u2705 Die Signatur ist gültig!"
+        return "\u2705 The signature is valid!"
      else: 
-          return "\U0001F6AB Die Signatur ist ungültig!"
+          return "\U0001F6AB The signature is invalid!"
 
 
                               ### Fermat's Factorization Method ###
@@ -239,7 +242,7 @@ def factorise(n):                               # n = a² - b² = (a + b) * (a -
         y = x ** 2 - n                          # loop within range until y becomes a perfect square
         i += 1
     if i >= MAX_ITER:                           # shows error message
-         raise ValueError(f"\nFaktorisierung nicht gefunden. Suche bricht nach {MAX_ITER} Durchläufen ab")
+         raise ValueError(f"\nNo factorization found. Search stopped after {MAX_ITER} iterations.")
     s = int(math.sqrt(y))                       # converts sqrt(y) into integers (performance optimization)
     return x + s, x - s                         # returns two factors p and q
 
@@ -249,7 +252,7 @@ def factorise(n):                               # n = a² - b² = (a + b) * (a -
 def babystep_giantstep(p, g, e, max_size=10**6):
     m = math.ceil(math.sqrt(p - 1))             # phi(p) is p-1 if p is prime
     if m > max_size:                            # restricts large inputs to prevent excessive memory usage
-         raise ValueError(f"Eingabe zu groß")
+         raise ValueError(f"Input too large")
     baby_steps = {pow(g, r, p): r for r in range(m)}    # g^r mod p for r = 0..m-1
 
     y = pow(g, m * (p - 2), p)                  # Fermat's little theorem
@@ -258,7 +261,7 @@ def babystep_giantstep(p, g, e, max_size=10**6):
         if current in baby_steps:
              return q * m + baby_steps[current] # returns solution                  
         current = (current * y) % p             # prepare next giant step
-    return "Keine Lösung gefunden"
+    return "No solution found"
 
 
                               ### Fiat-Shamir Authentification ###
@@ -277,16 +280,16 @@ def fiat_shamir(n, s, k, bit):                  # prover's step in the Fiat-Sham
 
 def fiat_shamir_verification(n, v, x, y, bit):  # verifier's step in the Fiat-Shamir identification scheme
     if v == 0:
-         raise ValueError("\nv darf nicht 0 sein")
+         raise ValueError("\nv cannot be 0.")
     _, _, v_inv = m_inverse(v, n)
     if bit == 1:                                # check if challenge was 1
         temp = x * v_inv % n
         if temp == pow(y, 2, n):
-            return "Bestanden!\nx * v\u207B\u00B9 = y² mod n"
+            return "Passed!\nx * v\u207B\u00B9 = y² mod n"
     elif bit == 0:                              # check if challenge was 0
         if pow(y, 2, n) == x % n:
-            return "Bestanden!\nx = y² mod n"
-    return "Ungültig"
+            return "Passed!\nx = y² mod n"
+    return "Invalid"
 
 
                               ### Auxiliaries ###
@@ -295,8 +298,8 @@ def create_hash(text, algo):                    # creates hash of the given text
     output = ""
     hash_value = hashlib.new(algo)
     hash_value.update(text.encode())
-    output += f"Hashwert ({algo}) : \n\n{hash_value.hexdigest()}\n\n"
-    hash_info = f"{hash_value.digest_size * 8} Bit Länge \n\n"
+    output += f"Hash value ({algo}) : \n\n{hash_value.hexdigest()}\n\n"
+    hash_info = f"{hash_value.digest_size * 8} Bit Length \n\n"
     return output, hash_info                    # returns hash value and digest size in bits
 
 

@@ -12,8 +12,8 @@ def auxiliaries_main(ctx):
         ctk.CTkLabel(image_frame, image=image, text="", 
                width=200, fg_color="#f3f3f3").pack(padx=2, pady=2, fill="both")
         
-    insert_info(ctx.info_box, "Hash-Funktionen", hash_functions_info)
-    insert_info(ctx.info_box, "MAC/HMAC", "Gewährleisten zusätzlich Authentizität. Weitere Infos im Menüpunkt MAC/HMAC")
+    insert_info(ctx.info_box, "Hash functions", hash_functions_info)
+    insert_info(ctx.info_box, "MAC/HMAC", "Also ensure authenticity. See the MAC/HMAC section for more information")
 
 
 def hash_function(ctx):
@@ -25,13 +25,13 @@ def hash_function(ctx):
             ctx.output_label.configure(text=f"{result}{length}", font=("Arial", 14))
             
             ctx.info_box.configure(state="normal")
-            ctx.info_box.insert("end", f"Ergebnis: {result}")
+            ctx.info_box.insert("end", f"Result: {result}")
             ctx.info_box.configure(state="disabled")
 
             if algo == "md5":
-                        ctx.output_label.configure(text=f"{result}{length}\n\nAchtung, Verfahren ist nicht mehr sicher!")
+                        ctx.output_label.configure(text=f"{result}{length}\n\nWarning: This method is no longer secure!")
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}")
+            ctx.output_label.configure(text=f"Error: {e}")
             
     entry_m = ctk.CTkEntry(ctx.content, placeholder_text="Message:", width=200)
     entry_m.pack(pady=5)
@@ -54,9 +54,9 @@ def hash_function(ctx):
                              value=value
                              ).grid(row=row, column=col, padx=10, pady=5)
 
-    ctk.CTkButton(ctx.content, text="Berechnen", command=run).pack(pady=10)
+    ctk.CTkButton(ctx.content, text="Calculate", command=run).pack(pady=10)
         
-    insert_info(ctx.info_box, "Kopierfreundliche Ausgabe:", "")
+    insert_info(ctx.info_box, "Copy-friendly output:", "")
 
 
 def pw_hashing(ctx):
@@ -65,12 +65,12 @@ def pw_hashing(ctx):
             username = entry_id.get()
             password = entry_pw.get()
             if pw_hash(username, password):
-                ctx.output_label.configure(text=f"Passwort korrekt", font=("Roboto", 14))
+                ctx.output_label.configure(text=f"Password correct", font=("Roboto", 14))
             else:
-                ctx.output_label.configure(text=f"Fehler: Überprüfe Eingaben", font=("Roboto", 14))
+                ctx.output_label.configure(text=f"Error: Check inputs", font=("Roboto", 14))
 
         except Exception as e:
-            ctx.output_label.configure(text=f"Fehler: {e}") 
+            ctx.output_label.configure(text=f"Error: {e}") 
 
     entry_id = ctk.CTkEntry(ctx.content, placeholder_text="Username:", width=200)
     entry_id.pack(pady=5)
@@ -86,5 +86,5 @@ def pw_hashing(ctx):
         ctk.CTkLabel(image_frame, image=image, text="", 
                width=200, fg_color="#f3f3f3").pack(padx=2, pady=2, fill="both")
         
-    insert_info(ctx.info_box, "Passwort-Datenbanken", pw_hash_info)
+    insert_info(ctx.info_box, "Password databases", pw_hash_info)
 
